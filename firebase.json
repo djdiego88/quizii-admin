@@ -1,0 +1,19 @@
+{
+  "hosting": [
+    {
+      "target": "quizzi-admin",
+      "public": "dist/quizzi-admin",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ]
+}

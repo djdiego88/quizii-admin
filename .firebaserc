@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "quiziiapp": {
+      "hosting": {
+        "quizzi-admin": [
+          "quiziiapp"
+        ]
+      }
+    }
+  }
+}
