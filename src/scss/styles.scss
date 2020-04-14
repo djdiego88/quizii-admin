@@ -1,0 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+
+// Import Font Nunito
+@import 'fonts';
+// Variables
+@import 'variables';
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+// Coreui
+@import '~@coreui/coreui/scss/coreui-standalone';
+//@import '~@coreui/coreui/scss/coreui';
+// Global
+@import 'global';
