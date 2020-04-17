@@ -1,6 +1,6 @@
 /*html, body { height: 100%; }
 body { margin: 0; font-family: $font-family-sans-serif !important; }
-.mat-body,
+*/.mat-body,
 .mat-body-1,
 .mat-typography,
 .mat-toolbar,
@@ -18,13 +18,22 @@ body { margin: 0; font-family: $font-family-sans-serif !important; }
 .mat-fab,
 .mat-mini-fab,
 .mat-card,
-.mat-form-field {
+.mat-form-field,
+.mat-table,
+.mat-paginator,
+.mat-paginator-page-size .mat-select-trigger {
   font-family: $font-family-sans-serif !important;
-}*/
+}
 
 app-login,
 app-layout {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+
+.main {
+  .container-fluid {
+    padding-top: 24px;
+  }
 }

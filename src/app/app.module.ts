@@ -40,13 +40,21 @@ import {
   AppFooterModule,
   AppSidebarModule,
 } from '@coreui/angular';
+import { UsersComponent } from './users/users.component';
+import { GetCountryCodePipe } from './get-country-code.pipe';
+import { GetCountryNamePipe } from './get-country-name.pipe';
+import { UserDialogComponent } from './users/user-dialog/user-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    LayoutComponent
+    LayoutComponent,
+    UsersComponent,
+    GetCountryCodePipe,
+    GetCountryNamePipe,
+    UserDialogComponent
   ],
   imports: [
     BrowserModule,

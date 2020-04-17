@@ -1,0 +1,27 @@
+<h3 mat-dialog-title>{{data.title}} User</h3>
+<div mat-dialog-content>
+  <form [formGroup]="userForm" (ngSubmit)="addEditUser(userForm.value)">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+      </div>
+      <input placeholder="Your display name" type="text" formControlName="displayName" class="form-control" [attr.value]="data.user?.displayName ? data.user?.displayName : null" required>
+      <ng-container *ngFor="let validation of validationMessages.displayName">
+        <div class="invalid-feedback d-block" *ngIf="userForm.get('displayName').hasError(validation.type) && (userForm.get('displayName').dirty || userForm.get('displayName').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <button type="submit" class="btn btn-secondary px-4" (click)="onCancelClick()">Cancel</button>
+        <button type="submit" class="btn btn-primary px-4" [disabled]="!userForm.valid">{{data.title}} User</button>
+        <label class="error-message">{{errorMessage}}</label>
+      </div>
+    </div>
+  </form>
+</div>
+<!--<div mat-dialog-actions>
+  <button mat-button (click)="onCancelClick()">No Thanks</button>
+  <button mat-button [disabled]="!userForm.valid">{{data.title}} User</button>
+</div>-->
