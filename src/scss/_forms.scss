@@ -1,0 +1,25 @@
+form {
+  font-size: 0.875rem;
+
+  label {
+    font-weight: 500;
+  }
+
+  legend {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  .form-control,
+  .input-group-text {
+    font-size: 0.875rem;
+  }
+
+  .ng-valid[required], .ng-valid.required  {
+    border-left: 5px solid #42A948; /* green */
+  }
+
+  .ng-invalid:not(form)  {
+    border-left: 5px solid #a94442; /* red */
+  }
+}

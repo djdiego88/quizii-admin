@@ -26,10 +26,10 @@ export class UsersService {
     );
   }
 
-  createUser(user: User) {
+  async createUser(user: User) {
     const userId = user.id;
     delete user.id;
-    return this.usersCollection.doc(userId).set(user);
+    return await this.usersCollection.doc(userId).set(user);
   }
 
   /*createOther(other: Other) {
@@ -53,7 +53,7 @@ export class UsersService {
     return this.usersCollection.doc(userId).set(user, { merge: true });
   }
 
-  deleteUser(userId: string) {
-    return this.usersCollection.doc(userId).delete();
+  async deleteUser(userId: string) {
+    return await this.usersCollection.doc(userId).delete();
   }
 }

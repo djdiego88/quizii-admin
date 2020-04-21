@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +22,10 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatSelectModule} from '@angular/material/select';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatNativeDateModule} from '@angular/material/core';
+import {MomentDateModule} from '@angular/material-moment-adapter';
+import {MatDialogModule} from '@angular/material/dialog';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule, SETTINGS } from '@angular/fire/firestore';
@@ -29,9 +34,6 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { environment } from '../environments/environment';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
-import { LayoutComponent } from './layout/layout.component';
 
 import {
   AppAsideModule,
@@ -40,10 +42,18 @@ import {
   AppFooterModule,
   AppSidebarModule,
 } from '@coreui/angular';
-import { UsersComponent } from './users/users.component';
 import { GetCountryCodePipe } from './get-country-code.pipe';
 import { GetCountryNamePipe } from './get-country-name.pipe';
+
+// App Components
+import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
+import { LayoutComponent } from './layout/layout.component';
+import { UsersComponent } from './users/users.component';
 import { UserDialogComponent } from './users/user-dialog/user-dialog.component';
+import { TopicsComponent } from './topics/topics.component';
+import { TopicDialogComponent } from './topics/topic-dialog/topic-dialog.component';
+
 
 @NgModule({
   declarations: [
@@ -54,11 +64,14 @@ import { UserDialogComponent } from './users/user-dialog/user-dialog.component';
     UsersComponent,
     GetCountryCodePipe,
     GetCountryNamePipe,
-    UserDialogComponent
+    UserDialogComponent,
+    TopicsComponent,
+    TopicDialogComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
@@ -82,6 +95,10 @@ import { UserDialogComponent } from './users/user-dialog/user-dialog.component';
     MatInputModule,
     MatRadioModule,
     MatSelectModule,
+    MatProgressSpinnerModule,
+    MatNativeDateModule,
+    MatDialogModule,
+    MomentDateModule,
     AppAsideModule,
     AppBreadcrumbModule,
     AppHeaderModule,

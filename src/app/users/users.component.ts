@@ -1,14 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {MatTableDataSource} from '@angular/material/table';
-import {MatPaginator} from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 import { User } from './user';
 import { UsersService } from './users.service';
-import { Observable } from 'rxjs';
 import { UtilitiesService } from './../utilities.service';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { UserDialogComponent } from './user-dialog/user-dialog.component';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
-export interface Avatars { full?: string; medium?: string; mini?: string; thumbnail?: string; }
 export interface Backgrounds { full?: string; large?: string; medium?: string; }
 
 @Component({
@@ -22,19 +21,19 @@ export class UsersComponent implements OnInit {
   displayedColumns: string[] = ['Full Name', 'Display Name', 'Country', 'City', 'Status', 'Actions'];
   dataSource = new MatTableDataSource<User>();
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  uploadAvatarPercent: Observable<number>;
-  downloadAvatarURL: Observable<string>;
-  uploadBgPercent: Observable<number>;
-  downloadBgURL: Observable<string>;
-  thumbnailImg: any;
+  countries: any;
 
   constructor(
     private usersService: UsersService,
     public dialog: MatDialog,
-    private utilities: UtilitiesService
+    private utilities: UtilitiesService,
+    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
+    this.utilities.getCountryList().subscribe((data) => {
+      this.countries = data;
+    });
     this.usersService.getUsers().subscribe(users => {
       this.dataSource.data = users;
       this.dataSource.paginator = this.paginator;
@@ -58,69 +57,46 @@ export class UsersComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  async userDialog(userData?: User) {
+  userDialog(userData?: User) {
     let dialogRef: MatDialogRef<UserDialogComponent, any>;
     if (userData) {
       dialogRef = this.dialog.open(UserDialogComponent, {
-        minHeight: 400,
-        minWidth: 600,
+        minHeight: 500,
+        minWidth: 700,
         data: {title: 'Edit', user: userData}
       });
     } else {
       dialogRef = this.dialog.open(UserDialogComponent, {
-        minHeight: 400,
-        minWidth: 600,
+        minHeight: 500,
+        minWidth: 700,
         data: {title: 'Add'}
       });
     }
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      console.log(result);
+      if (result) {
+        const edited = (result === 'edited') ? 'User Edited!' : 'User Added!';
+        this._snackBar.open(edited, null, {duration: 3000});
+      }
     });
   }
-
-  async uploadAvatar(event) {
-    const file = event.target.files[0];
-    if (file.size > 1048576) {
-      alert('File is too big! Maximum is 1MB.');
-      return;
-    }
-    const extension = file.name.split('.').pop();
-    const randomId = this.utilities.randomId(30);
-    const avatarSizes = [
-      {size: 'mini', width: 100, height: 100},
-      {size: 'thumbnail', width: 150, height: 150},
-      {size: 'medium', width: 300, height: 300},
-      {size: 'full', width: null, height: null},
-    ];
-
-    const avatars: Avatars = {};
-
-    for (const elem of avatarSizes) {
-        const url = await this.utilities.uploadImages(elem, 'users/avatars', randomId, extension, file);
-        avatars[elem.size] = url;
-    }
-  }
-
-  async uploadBg(event) {
-    const file = event.target.files[0];
-    if (file.size > 1048576) {
-      alert('File is too big! Maximum is 1MB.');
-      return;
-    }
-    const extension = file.name.split('.').pop();
-    const randomId = this.utilities.randomId(30);
-    const bgSizes = [
-      {size: 'medium', width: 400, height: 225},
-      {size: 'large', width: 600, height: 337},
-      {size: 'full', width: null, height: null},
-    ];
-
-    const bgs: Backgrounds = {};
-
-    for (const elem of bgSizes) {
-        const url = await this.utilities.uploadImages(elem, 'users/backgrounds', randomId, extension, file);
-        bgs[elem.size] = url;
+  deleteUser(user: User) {
+    if (window.confirm('Do you really want to delete this user?')) {
+      this.usersService.deleteUser(user.id).then(() => {
+        if (user.avatar) {
+          this.utilities.deleteImage(user.avatar['mini']);
+          this.utilities.deleteImage(user.avatar['thumbnail']);
+          this.utilities.deleteImage(user.avatar['medium']);
+          this.utilities.deleteImage(user.avatar['full']);
+        }
+        if (user.bgImage) {
+          this.utilities.deleteImage(user.bgImage['medium']);
+          this.utilities.deleteImage(user.bgImage['large']);
+          this.utilities.deleteImage(user.bgImage['full']);
+        }
+        this._snackBar.open('User Deleted!', null, {duration: 3000});
+      }).catch((error) => {
+        console.error('Error removing document: ', error);
+      });
     }
   }
 }

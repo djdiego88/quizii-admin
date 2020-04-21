@@ -1,0 +1,128 @@
+<h3 mat-dialog-title>{{data.title}} Topic</h3>
+<form [formGroup]="topicForm" (ngSubmit)="addEditTopic(topicForm.value)">
+  <mat-dialog-content class="mat-dialog-content">
+    <fieldset formGroupName="name">
+      <legend>Name</legend>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="nameEN">English</label>
+        </div>
+        <input type="text" class="form-control" id="nameEN" formControlName="en">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="nameES">Spanish</label>
+        </div>
+        <input type="text" class="form-control" id="nameES" formControlName="es">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="nameFR">French</label>
+        </div>
+        <input type="text" class="form-control" id="nameFR" formControlName="fr">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="namePT">Portuguese</label>
+        </div>
+        <input type="text" class="form-control" id="namePT" formControlName="pt">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="nameDE">German</label>
+        </div>
+        <input type="text" class="form-control" id="nameDE" formControlName="de">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="nameIT">Italian</label>
+        </div>
+        <input type="text" class="form-control" id="nameIT" formControlName="it">
+      </div>
+      <ng-container *ngFor="let validation of validationMessages.name">
+        <div class="invalid-feedback d-block" *ngIf="topicForm.get('name').hasError(validation.type) && (topicForm.get('name').dirty || topicForm.get('name').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </fieldset>
+    <fieldset formGroupName="description">
+      <legend>Description</legend>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="descriptionEN">English</label>
+        </div>
+        <input type="text" class="form-control" id="descriptionEN" formControlName="en">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="descriptionES">Spanish</label>
+        </div>
+        <input type="text" class="form-control" id="descriptionES" formControlName="es">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="descriptionFR">French</label>
+        </div>
+        <input type="text" class="form-control" id="descriptionFR" formControlName="fr">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="descriptionPT">Portuguese</label>
+        </div>
+        <input type="text" class="form-control" id="descriptionPT" formControlName="pt">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="descriptionDE">German</label>
+        </div>
+        <input type="text" class="form-control" id="descriptionDE" formControlName="de">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="descriptionIT">Italian</label>
+        </div>
+        <input type="text" class="form-control" id="descriptionIT" formControlName="it">
+      </div>
+      <ng-container *ngFor="let validation of validationMessages.description">
+        <div class="invalid-feedback d-block" *ngIf="topicForm.get('description').hasError(validation.type) && (topicForm.get('description').dirty || topicForm.get('description').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </fieldset>
+    <div class="form-group">
+      <label for="image">Image</label>
+      <input id="image" class="form-control-file" type="file" (change)="uploadImage($event)" accept="image/png, image/x-png,image/jpeg" />
+      <mat-spinner *ngIf="uploadingImage" diameter="32"></mat-spinner>
+      <img *ngIf="imageImg" [src]="imageImg" width="100" height="100"/>
+    </div>
+    <div class="form-group">
+      <label for="parent">Parent Topic</label>
+      <select id="parent" class="form-control" formControlName="parent">
+        <option value="none">Choose a parent...</option>
+        <option *ngFor="let parentel of topics" [value]="parentel.key">{{parentel.value}}</option>
+      </select>
+      <!--<ng-container *ngFor="let validation of validationMessages.parent">
+        <div class="invalid-feedback d-block" *ngIf="topicForm.get('parent').hasError(validation.type) && (topicForm.get('parent').dirty || topicForm.get('parent').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>-->
+    </div>
+    <div class="form-group">
+      <label for="status">Status</label>
+      <select id="status" class="form-control" formControlName="status">
+        <option value="">Choose a status...</option>
+        <option [value]="'enabled'">Enabled</option>
+        <option [value]="'disabled'">Disabled</option>
+      </select>
+      <ng-container *ngFor="let validation of validationMessages.status">
+        <div class="invalid-feedback d-block" *ngIf="topicForm.get('status').hasError(validation.type) && (topicForm.get('status').dirty || topicForm.get('status').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end" class="mat-dialog-actions">
+    <button type="button" class="btn btn-secondary px-4 mr-2" (click)="onCancelClick()">Cancel</button>
+    <button type="submit" class="btn btn-primary px-4" [disabled]="!topicForm.valid || loading">{{data.title}} Topic</button>
+  </mat-dialog-actions>
+</form>

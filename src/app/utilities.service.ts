@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { finalize } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { Cacheable } from 'ngx-cacheable';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +12,7 @@ export class UtilitiesService {
 
   constructor(
     private storage: AngularFireStorage,
+    private httpClient: HttpClient
   ) {
     if (!HTMLCanvasElement.prototype.toBlob) {
       Object.defineProperty(HTMLCanvasElement.prototype, 'toBlob', {
@@ -46,9 +49,6 @@ export class UtilitiesService {
 
       if (elem.size === 'full') {
         const task = this.storage.upload(filePath, file);
-        // observe percentage changes
-        // this.uploadAvatarPercent = task.percentageChanges();
-        // get notified when the download URL is available
         task.snapshotChanges().pipe(
           finalize(() => {
             fileRef.getDownloadURL().subscribe(url => {
@@ -68,6 +68,10 @@ export class UtilitiesService {
         });
       }
     });
+  }
+
+  async deleteImage(url: string) {
+    return await this.storage.storage.refFromURL(url).delete();
   }
 
   resizeImage(file: File, width: number = 700, height: number = 700, type: string = 'image/jpeg', quality: number = 1): Observable<any> {
@@ -122,5 +126,15 @@ export class UtilitiesService {
           (reader.onerror = error => observer.error(error));
       };
     });
+  }
+
+  @Cacheable({
+    maxAge: 60000000
+  })
+  public getCountryList() {
+    const browserLanguage = navigator.language.split('-')[0];
+    const countryService = `https://cdn.jsdelivr.net/gh/umpirsky/country-list/data/${browserLanguage}/country.json`;
+    const countryObject = this.httpClient.get(countryService);
+    return countryObject;
   }
 }

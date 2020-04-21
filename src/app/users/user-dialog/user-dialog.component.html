@@ -1,27 +1,166 @@
 <h3 mat-dialog-title>{{data.title}} User</h3>
-<div mat-dialog-content>
-  <form [formGroup]="userForm" (ngSubmit)="addEditUser(userForm.value)">
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+<form [formGroup]="userForm" (ngSubmit)="addEditUser(userForm.value)">
+  <mat-dialog-content class="mat-dialog-content">
+    <div class="form-row">
+      <div class="form-group col">
+        <label for="firstName">First Name</label>
+        <input id="firstName" type="text" class="form-control" placeholder="First name" formControlName="firstName">
+        <ng-container *ngFor="let validation of validationMessages.firstName">
+          <div class="invalid-feedback d-block" *ngIf="userForm.get('firstName').hasError(validation.type) && (userForm.get('firstName').dirty || userForm.get('firstName').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
       </div>
-      <input placeholder="Your display name" type="text" formControlName="displayName" class="form-control" [attr.value]="data.user?.displayName ? data.user?.displayName : null" required>
-      <ng-container *ngFor="let validation of validationMessages.displayName">
-        <div class="invalid-feedback d-block" *ngIf="userForm.get('displayName').hasError(validation.type) && (userForm.get('displayName').dirty || userForm.get('displayName').touched)">
-          {{ validation.message }}
-        </div>
-      </ng-container>
+      <div class="form-group col">
+        <label for="lastName">Last Name</label>
+        <input id="lastName" type="text" class="form-control" placeholder="Last name" formControlName="lastName">
+        <ng-container *ngFor="let validation of validationMessages.lastName">
+          <div class="invalid-feedback d-block" *ngIf="userForm.get('lastName').hasError(validation.type) && (userForm.get('lastName').dirty || userForm.get('lastName').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
     </div>
-    <div class="row">
+    <div class="form-row">
+      <div class="form-group col-6">
+        <label for="displayName">Display Name or Nickname</label>
+        <input id="displayName" placeholder="Display Name or Nickname" type="text" formControlName="displayName" class="form-control">
+        <ng-container *ngFor="let validation of validationMessages.displayName">
+          <div class="invalid-feedback d-block" *ngIf="userForm.get('displayName').hasError(validation.type) && (userForm.get('displayName').dirty || userForm.get('displayName').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col">
+        <label for="country">Country</label>
+        <select id="country" class="form-control" formControlName="country">
+          <option value="">Choose a country...</option>
+          <option *ngFor="let country of countries" [value]="country.key">{{country.value}}</option>
+        </select>
+        <ng-container *ngFor="let validation of validationMessages.country">
+          <div class="invalid-feedback d-block" *ngIf="userForm.get('country').hasError(validation.type) && (userForm.get('country').dirty || userForm.get('country').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+      <div class="form-group col">
+        <label for="city">City</label>
+        <input id="city" placeholder="City" type="text" formControlName="city" class="form-control">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col">
+        <label for="avatar">Profile Photo</label>
+        <input id="avatar" class="form-control-file" type="file" (change)="uploadAvatar($event)" accept="image/png, image/x-png,image/jpeg" />
+        <mat-spinner *ngIf="uploadingAvatar" diameter="32"></mat-spinner>
+        <img *ngIf="avatarImg" [src]="avatarImg" width="100" height="100"/>
+      </div>
+      <div class="form-group col">
+        <label for="background">Background Image</label>
+        <input id="background" class="form-control-file" type="file" (change)="uploadBg($event)" accept="image/png, image/x-png,image/jpeg">
+        <mat-spinner *ngIf="uploadingBackground" diameter="32"></mat-spinner>
+        <img *ngIf="backgroundImg" [src]="backgroundImg" width="200" height="auto"/>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col">
+        <label for="birthday">Birthday</label>
+        <div class="input-group mb-3">
+          <input [matDatepicker]="birthdayPicker" [max]="maxDate" formControlName="birthday" class="form-control" readonly>
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="birthdayPicker.open()"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+          </div>
+          <mat-datepicker #birthdayPicker></mat-datepicker>
+        </div>
+      </div>
+      <div class="form-group col">
+        <label for="title">Title</label>
+        <select id="title" class="form-control" formControlName="title">
+          <option value="">Choose a title...</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col">
+        <label for="language">Language</label>
+        <select id="language" class="form-control" formControlName="language">
+          <option value="">Choose a language...</option>
+          <option *ngFor="let language of languages" [value]="language.key">{{language.value}}</option>
+        </select>
+        <ng-container *ngFor="let validation of validationMessages.language">
+          <div class="invalid-feedback d-block" *ngIf="userForm.get('language').hasError(validation.type) && (userForm.get('language').dirty || userForm.get('language').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+      <div class="form-group col">
+        <label for="status">Status</label>
+        <select id="status" class="form-control" formControlName="status">
+          <option value="">Choose a status...</option>
+          <option [value]="'enabled'">Enabled</option>
+          <option [value]="'disabled'">Disabled</option>
+        </select>
+        <ng-container *ngFor="let validation of validationMessages.status">
+          <div class="invalid-feedback d-block" *ngIf="userForm.get('status').hasError(validation.type) && (userForm.get('status').dirty || userForm.get('status').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col">
+        <label for="level">Level</label>
+        <input id="level" type="text" formControlName="level" class="form-control" readonly>
+        <ng-container *ngFor="let validation of validationMessages.level">
+          <div class="invalid-feedback d-block" *ngIf="userForm.get('level').hasError(validation.type) && (userForm.get('level').dirty || userForm.get('level').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+      <div class="form-group col">
+        <label for="totalPoints">Total Points</label>
+        <input id="totalPoints" type="text" formControlName="totalPoints" class="form-control" readonly>
+        <ng-container *ngFor="let validation of validationMessages.totalPoints">
+          <div class="invalid-feedback d-block" *ngIf="userForm.get('totalPoints').hasError(validation.type) && (userForm.get('totalPoints').dirty || userForm.get('totalPoints').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="online" formControlName="online">
+          <label class="form-check-label" for="online">Online?</label>
+        </div>
+      </div>
+      <div class="form-group col">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="privateProfile" formControlName="privateProfile">
+          <label class="form-check-label" for="privateProfile">Private Profile?</label>
+        </div>
+      </div>
+      <div class="form-group col">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="showAge" formControlName="showAge">
+          <label class="form-check-label" for="showAge">Show Age?</label>
+        </div>
+      </div>
+    </div>
+    <!--<div class="row">
       <div class="col-6">
-        <button type="submit" class="btn btn-secondary px-4" (click)="onCancelClick()">Cancel</button>
-        <button type="submit" class="btn btn-primary px-4" [disabled]="!userForm.valid">{{data.title}} User</button>
+        <button type="button" class="btn btn-secondary px-4 mr-2" (click)="onCancelClick()">Cancel</button>
+        <button type="submit" class="btn btn-primary px-4" [disabled]="!userForm.valid || loading">{{data.title}} User</button>
+      </div>
+      <div class="col-6">
         <label class="error-message">{{errorMessage}}</label>
       </div>
-    </div>
-  </form>
-</div>
-<!--<div mat-dialog-actions>
-  <button mat-button (click)="onCancelClick()">No Thanks</button>
-  <button mat-button [disabled]="!userForm.valid">{{data.title}} User</button>
-</div>-->
+    </div>-->
+  </mat-dialog-content>
+  <mat-dialog-actions align="end" class="mat-dialog-actions">
+    <button type="button" class="btn btn-secondary px-4 mr-2" (click)="onCancelClick()">Cancel</button>
+    <button type="submit" class="btn btn-primary px-4" [disabled]="!userForm.valid || loading">{{data.title}} User</button>
+  </mat-dialog-actions>
+</form>

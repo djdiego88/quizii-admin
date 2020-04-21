@@ -1,12 +1,11 @@
 export interface User {
-  avatar?: object | null;
-  bgImage?: object | null;
+  avatar?: any | null;
+  bgImage?: any | null;
   birthday?: any;
   city?: string;
-  country?: object;
+  country?: string;
   createdDate?: any;
   displayName?: string;
-  gender?: string;
   id?: string;
   language?: string;
   lastActiveDate?: any;
