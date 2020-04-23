@@ -1,0 +1,94 @@
+<h3 mat-dialog-title>{{data.title}} Title</h3>
+<form [formGroup]="titleForm" (ngSubmit)="addEditTitle(titleForm.value)">
+  <mat-dialog-content class="mat-dialog-content">
+    <fieldset formGroupName="title">
+      <legend>Title</legend>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="titleEN">English</label>
+        </div>
+        <input type="text" class="form-control" id="titleEN" formControlName="en">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="titleES">Spanish</label>
+        </div>
+        <input type="text" class="form-control" id="titleES" formControlName="es">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="titleFR">French</label>
+        </div>
+        <input type="text" class="form-control" id="titleFR" formControlName="fr">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="titlePT">Portuguese</label>
+        </div>
+        <input type="text" class="form-control" id="titlePT" formControlName="pt">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="titleDE">German</label>
+        </div>
+        <input type="text" class="form-control" id="titleDE" formControlName="de">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="titleIT">Italian</label>
+        </div>
+        <input type="text" class="form-control" id="titleIT" formControlName="it">
+      </div>
+      <ng-container *ngFor="let validation of validationMessages.title">
+        <div class="invalid-feedback d-block" *ngIf="titleForm.get('title').hasError(validation.type) && (titleForm.get('title').dirty || titleForm.get('title').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </fieldset>
+    <div class="form-group">
+      <label for="topic">Topic</label>
+      <select id="topic" class="form-control" formControlName="topic">
+        <option value="">Choose a topic...</option>
+        <optgroup *ngFor = 'let topic of children' label="{{topic.group}}">
+              <option *ngFor = 'let child of topic.items' [value]="child.id">{{child.name}}</option>
+            </optgroup>
+      </select>
+      <ng-container *ngFor="let validation of validationMessages.topic">
+        <div class="invalid-feedback d-block" *ngIf="titleForm.get('topic').hasError(validation.type) && (titleForm.get('topic').dirty || titleForm.get('topic').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+    <div class="form-group">
+      <label for="level">Level</label>
+      <select id="level" class="form-control" formControlName="level">
+        <option value="">Choose an level...</option>
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="15">15</option>
+        <option value="20">20</option>
+        <option value="25">25</option>
+        <option value="30">30</option>
+        <option value="40">40</option>
+        <option value="50">50</option>
+        <option value="60">60</option>
+        <option value="70">70</option>
+        <option value="80">80</option>
+        <option value="90">90</option>
+        <option value="100">100</option>
+        <option value="120">120</option>
+        <option value="140">140</option>
+        <option value="160">160</option>
+      </select>
+      <ng-container *ngFor="let validation of validationMessages.level">
+        <div class="invalid-feedback d-block" *ngIf="titleForm.get('level').hasError(validation.type) && (titleForm.get('level').dirty || titleForm.get('level').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end" class="mat-dialog-actions">
+    <button type="button" class="btn btn-secondary px-4 mr-2" (click)="onCancelClick()">Cancel</button>
+    <button type="submit" class="btn btn-primary px-4" [disabled]="!titleForm.valid || loading">{{data.title}} Title</button>
+  </mat-dialog-actions>
+</form>

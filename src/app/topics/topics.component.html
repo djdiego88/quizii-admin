@@ -24,12 +24,12 @@
                 <mat-table #table [dataSource]="dataSource">
                   <ng-container matColumnDef="Name">
                     <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.name?.en}} </mat-cell>
+                    <mat-cell *matCellDef="let element"><i *ngIf="element.parent === 'none'" class="fa fa-certificate" aria-hidden="true"></i><i *ngIf="element.parent !== 'none'" class="fa fa-level-up" aria-hidden="true"></i>&nbsp;&nbsp;{{element.name?.en}} </mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="Languages">
                     <mat-header-cell *matHeaderCellDef> Available Languages </mat-header-cell>
                     <mat-cell *matCellDef="let element">
-                      <span *ngFor="let language of element.availableLanguages" class="badge badge-primary">{{language}}</span>
+                      <span *ngFor="let language of element.availableLanguages" class="badge badge-primary mr-1">{{language}}</span>
                     </mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="Status">
@@ -51,7 +51,7 @@
                   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
                 </mat-table>
-                <mat-paginator [pageSizeOptions]="[5, 10, 20, 50, 100]" showFirstLastButtons></mat-paginator>
+                <mat-paginator [pageSizeOptions]="[5, 10, 20, 50, 100]" [pageSize]="20" showFirstLastButtons></mat-paginator>
               </div>
             </div>
           </div>

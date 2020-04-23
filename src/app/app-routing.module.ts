@@ -6,6 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { AngularFireAuthGuard, redirectUnauthorizedTo, redirectLoggedInTo } from '@angular/fire/auth-guard';
 import { UsersComponent } from './users/users.component';
 import { TopicsComponent } from './topics/topics.component';
+import { QuestionsComponent } from './questions/questions.component';
+import { TitlesComponent } from './titles/titles.component';
 
 const redirectLoggedInToHome = () => redirectLoggedInTo(['home']);
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
@@ -37,6 +39,18 @@ const routes: Routes = [
       {
         path: 'topics',
         component: TopicsComponent,
+        canActivate: [AngularFireAuthGuard],
+        data: { authGuardPipe: redirectUnauthorizedToLogin }
+      },
+      {
+        path: 'questions',
+        component: QuestionsComponent,
+        canActivate: [AngularFireAuthGuard],
+        data: { authGuardPipe: redirectUnauthorizedToLogin }
+      },
+      {
+        path: 'titles',
+        component: TitlesComponent,
         canActivate: [AngularFireAuthGuard],
         data: { authGuardPipe: redirectUnauthorizedToLogin }
       },

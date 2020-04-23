@@ -20,7 +20,6 @@ export class TopicsComponent implements OnInit {
   displayedColumns: string[] = ['Name', 'Languages', 'Status', 'Actions'];
   dataSource = new MatTableDataSource<Topic>();
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  countries: any;
 
   constructor(
     private topicsService: TopicsService,

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { Topic } from './topic';
 
 @Injectable({
@@ -17,7 +17,10 @@ export class TopicsService {
    }
 
   getTopics() {
-    return this.topicsCollection.snapshotChanges().pipe(
+    return this.firestore.collection<Topic>(
+      'topics',
+      ref => ref.orderBy('createdDate', 'asc')
+      ).snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Topic;
         const id = a.payload.doc.id;
@@ -37,6 +40,19 @@ export class TopicsService {
         return { id, ...data };
       }))
     );
+  }
+
+  getChildrenTopicsFromParent(parent: string) {
+    return this.firestore.collection<Topic>(
+      'topics',
+      ref => ref.where('parent', '==', parent).orderBy('createdDate', 'asc')
+      ).snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as Topic;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    )/*.pipe(take(1)).toPromise()*/;
   }
 
   async createTopic(topic: Topic) {

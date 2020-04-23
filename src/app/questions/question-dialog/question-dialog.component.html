@@ -1,0 +1,277 @@
+<h3 mat-dialog-title>{{data.title}} Question</h3>
+<form [formGroup]="questionForm" (ngSubmit)="addEditQuestion(questionForm.value)">
+  <mat-dialog-content class="mat-dialog-content">
+    <fieldset formGroupName="question">
+      <legend>Question</legend>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="questionEN">English</label>
+        </div>
+        <input type="text" class="form-control" id="questionEN" formControlName="en">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="questionES">Spanish</label>
+        </div>
+        <input type="text" class="form-control" id="questionES" formControlName="es">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="questionFR">French</label>
+        </div>
+        <input type="text" class="form-control" id="questionFR" formControlName="fr">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="questionPT">Portuguese</label>
+        </div>
+        <input type="text" class="form-control" id="questionPT" formControlName="pt">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="questionDE">German</label>
+        </div>
+        <input type="text" class="form-control" id="questionDE" formControlName="de">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="questionIT">Italian</label>
+        </div>
+        <input type="text" class="form-control" id="questionIT" formControlName="it">
+      </div>
+      <ng-container *ngFor="let validation of validationMessages.question">
+        <div class="invalid-feedback d-block" *ngIf="questionForm.get('question').hasError(validation.type) && (questionForm.get('question').dirty || questionForm.get('question').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </fieldset>
+    <fieldset formGroupName="optionA">
+      <legend>Option A</legend>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="optionAEN">English</label>
+        </div>
+        <input type="text" class="form-control" id="optionAEN" formControlName="en">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="optionAES">Spanish</label>
+        </div>
+        <input type="text" class="form-control" id="optionAES" formControlName="es">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="optionAFR">French</label>
+        </div>
+        <input type="text" class="form-control" id="optionAFR" formControlName="fr">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="optionAPT">Portuguese</label>
+        </div>
+        <input type="text" class="form-control" id="optionAPT" formControlName="pt">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="optionADE">German</label>
+        </div>
+        <input type="text" class="form-control" id="optionADE" formControlName="de">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="optionAIT">Italian</label>
+        </div>
+        <input type="text" class="form-control" id="optionAIT" formControlName="it">
+      </div>
+      <ng-container *ngFor="let validation of validationMessages.optionA">
+        <div class="invalid-feedback d-block" *ngIf="questionForm.get('optionA').hasError(validation.type) && (questionForm.get('optionA').dirty || questionForm.get('optionA').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </fieldset>
+    <fieldset formGroupName="optionB">
+      <legend>Option B</legend>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="optionBEN">English</label>
+        </div>
+        <input type="text" class="form-control" id="optionBEN" formControlName="en">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="optionBES">Spanish</label>
+        </div>
+        <input type="text" class="form-control" id="optionBES" formControlName="es">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="optionBFR">French</label>
+        </div>
+        <input type="text" class="form-control" id="optionBFR" formControlName="fr">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="optionBPT">Portuguese</label>
+        </div>
+        <input type="text" class="form-control" id="optionBPT" formControlName="pt">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="optionBDE">German</label>
+        </div>
+        <input type="text" class="form-control" id="optionBDE" formControlName="de">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="optionBIT">Italian</label>
+        </div>
+        <input type="text" class="form-control" id="optionBIT" formControlName="it">
+      </div>
+      <ng-container *ngFor="let validation of validationMessages.optionB">
+        <div class="invalid-feedback d-block" *ngIf="questionForm.get('optionB').hasError(validation.type) && (questionForm.get('optionB').dirty || questionForm.get('optionB').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </fieldset>
+    <fieldset formGroupName="optionC">
+      <legend>Option C</legend>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="optionCEN">English</label>
+        </div>
+        <input type="text" class="form-control" id="optionCEN" formControlName="en">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="optionCES">Spanish</label>
+        </div>
+        <input type="text" class="form-control" id="optionCES" formControlName="es">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="optionCFR">French</label>
+        </div>
+        <input type="text" class="form-control" id="optionCFR" formControlName="fr">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="optionCPT">Portuguese</label>
+        </div>
+        <input type="text" class="form-control" id="optionCPT" formControlName="pt">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="optionCDE">German</label>
+        </div>
+        <input type="text" class="form-control" id="optionCDE" formControlName="de">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="optionCIT">Italian</label>
+        </div>
+        <input type="text" class="form-control" id="optionCIT" formControlName="it">
+      </div>
+      <ng-container *ngFor="let validation of validationMessages.optionC">
+        <div class="invalid-feedback d-block" *ngIf="questionForm.get('optionC').hasError(validation.type) && (questionForm.get('optionC').dirty || questionForm.get('optionC').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </fieldset>
+    <fieldset formGroupName="optionD">
+      <legend>Option D</legend>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="optionDEN">English</label>
+        </div>
+        <input type="text" class="form-control" id="optionDEN" formControlName="en">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="optionDES">Spanish</label>
+        </div>
+        <input type="text" class="form-control" id="optionDES" formControlName="es">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="optionDFR">French</label>
+        </div>
+        <input type="text" class="form-control" id="optionDFR" formControlName="fr">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="optionDPT">Portuguese</label>
+        </div>
+        <input type="text" class="form-control" id="optionDPT" formControlName="pt">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="optionDDE">German</label>
+        </div>
+        <input type="text" class="form-control" id="optionDDE" formControlName="de">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="optionDIT">Italian</label>
+        </div>
+        <input type="text" class="form-control" id="optionDIT" formControlName="it">
+      </div>
+      <ng-container *ngFor="let validation of validationMessages.optionD">
+        <div class="invalid-feedback d-block" *ngIf="questionForm.get('optionD').hasError(validation.type) && (questionForm.get('optionD').dirty || questionForm.get('optionD').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </fieldset>
+    <div class="form-group">
+      <label for="rightAnswer">Right Answer</label>
+      <select id="rightAnswer" class="form-control" formControlName="rightAnswer">
+        <option value="">Choose an answer...</option>
+        <option value="optionA">Option A</option>
+        <option value="optionB">Option B</option>
+        <option value="optionC">Option C</option>
+        <option value="optionD">Option D</option>
+      </select>
+      <ng-container *ngFor="let validation of validationMessages.rightAnswer">
+        <div class="invalid-feedback d-block" *ngIf="questionForm.get('rightAnswer').hasError(validation.type) && (questionForm.get('rightAnswer').dirty || questionForm.get('rightAnswer').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+    <div class="form-group">
+      <label for="image">Image</label>
+      <input id="image" class="form-control-file" type="file" (change)="uploadImage($event)" accept="image/png, image/x-png,image/jpeg" />
+      <mat-spinner *ngIf="uploadingImage" diameter="32"></mat-spinner>
+      <img *ngIf="imageImg" [src]="imageImg" width="200" height="auto"/>
+    </div>
+    <div class="form-group">
+      <label for="topic">Topic</label>
+      <select id="topic" class="form-control" formControlName="topic">
+        <option value="">Choose a topic...</option>
+        <optgroup *ngFor = 'let topic of children' label="{{topic.group}}">
+              <option *ngFor = 'let child of topic.items' [value]="child.id">{{child.name}}</option>
+            </optgroup>
+      </select>
+      <ng-container *ngFor="let validation of validationMessages.topic">
+        <div class="invalid-feedback d-block" *ngIf="questionForm.get('topic').hasError(validation.type) && (questionForm.get('topic').dirty || questionForm.get('topic').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+    <div class="form-group">
+      <label for="status">Status</label>
+      <select id="status" class="form-control" formControlName="status">
+        <option value="">Choose a status...</option>
+        <option [value]="'enabled'">Enabled</option>
+        <option [value]="'disabled'">Disabled</option>
+      </select>
+      <ng-container *ngFor="let validation of validationMessages.status">
+        <div class="invalid-feedback d-block" *ngIf="questionForm.get('status').hasError(validation.type) && (questionForm.get('status').dirty || questionForm.get('status').touched)">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end" class="mat-dialog-actions">
+    <button type="button" class="btn btn-secondary px-4 mr-2" (click)="onCancelClick()">Cancel</button>
+    <button type="submit" class="btn btn-primary px-4" [disabled]="!questionForm.valid || loading || !imageImg">{{data.title}} Question</button>
+  </mat-dialog-actions>
+</form>

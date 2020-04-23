@@ -53,6 +53,10 @@ import { UsersComponent } from './users/users.component';
 import { UserDialogComponent } from './users/user-dialog/user-dialog.component';
 import { TopicsComponent } from './topics/topics.component';
 import { TopicDialogComponent } from './topics/topic-dialog/topic-dialog.component';
+import { QuestionsComponent } from './questions/questions.component';
+import { QuestionDialogComponent } from './questions/question-dialog/question-dialog.component';
+import { TitlesComponent } from './titles/titles.component';
+import { TitleDialogComponent } from './titles/title-dialog/title-dialog.component';
 
 
 @NgModule({
@@ -67,6 +71,10 @@ import { TopicDialogComponent } from './topics/topic-dialog/topic-dialog.compone
     UserDialogComponent,
     TopicsComponent,
     TopicDialogComponent,
+    QuestionsComponent,
+    QuestionDialogComponent,
+    TitlesComponent,
+    TitleDialogComponent,
   ],
   imports: [
     BrowserModule,

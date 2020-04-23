@@ -123,6 +123,6 @@
   </mat-dialog-content>
   <mat-dialog-actions align="end" class="mat-dialog-actions">
     <button type="button" class="btn btn-secondary px-4 mr-2" (click)="onCancelClick()">Cancel</button>
-    <button type="submit" class="btn btn-primary px-4" [disabled]="!topicForm.valid || loading">{{data.title}} Topic</button>
+    <button type="submit" class="btn btn-primary px-4" [disabled]="!topicForm.valid || loading || !imageImg">{{data.title}} Topic</button>
   </mat-dialog-actions>
 </form>
